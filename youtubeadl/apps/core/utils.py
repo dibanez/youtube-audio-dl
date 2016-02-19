@@ -18,7 +18,7 @@ def slugify(text, delim=u'-'):
         word = normalize('NFKD', word).encode('ascii', 'ignore')
         if word:
             result.append(word)
-    return unicode(delim.join(result))
+    return str(delim.join(result))
 
 
 def get_client_ip(request):
