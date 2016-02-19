@@ -1,6 +1,7 @@
 import re
 from unicodedata import normalize
 
+_punct_re = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.:]+')
 
 def slugify(text, delim=u'-'):
     """
@@ -13,12 +14,12 @@ def slugify(text, delim=u'-'):
     """
     result = []
 
-    re_obj = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.:]+')
-    for word in re_obj.split(text):
+    for word in _punct_re.split(text.lower()):
         word = normalize('NFKD', word).encode('ascii', 'ignore')
+        word = word.decode('utf-8')
         if word:
             result.append(word)
-    return unicode(delim.join(result))
+    return delim.join(result)
 
 
 def get_client_ip(request):
